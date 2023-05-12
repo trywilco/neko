@@ -57,8 +57,8 @@ export class NekoClient extends BaseClient implements EventEmitter<NekoEvents> {
     this.$accessor.chat.reset()
   }
 
-  login(password: string, displayname: string) {
-    this.connect(this.url, password, displayname)
+  login(password: string, displayname: string, browseurl: string) {
+    this.connect(this.url, password, displayname, browseurl)
   }
 
   logout() {

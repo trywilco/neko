@@ -152,9 +152,11 @@
   @Component({ name: 'neko-connect' })
   export default class extends Vue {
     private autoPassword: string | null = new URL(location.href).searchParams.get('pwd')
+    private autoUrl: string | null = new URL(location.href).searchParams.get('url')
 
     private displayname: string = ''
     private password: string = ''
+    private url: string = ''
 
     mounted() {
       // auto-password fill
@@ -162,6 +164,11 @@
       if (this.autoPassword !== null) {
         this.removeUrlParam('pwd')
         password = this.autoPassword
+      }
+
+      let url = this.$accessor.browseurl
+      if (this.autoUrl !== null) {
+        url = this.autoUrl
       }
 
       // auto-user fill
@@ -173,7 +180,7 @@
       }
 
       if (displayname !== '' && password !== '') {
-        this.$accessor.login({ displayname, password })
+        this.$accessor.login({ displayname, password, browseurl: url })
         this.autoPassword = null
       }
     }
@@ -209,6 +216,11 @@
         password = this.autoPassword
       }
 
+      let url = this.url
+      if (this.autoUrl !== null) {
+        url = this.autoUrl
+      }
+
       if (this.displayname == '') {
         this.$swal({
           title: this.$t('connect.error') as string,
@@ -218,7 +230,7 @@
         return
       }
 
-      this.$accessor.login({ displayname: this.displayname, password })
+      this.$accessor.login({ displayname: this.displayname, password, browseurl: url })
       this.autoPassword = null
     }
 

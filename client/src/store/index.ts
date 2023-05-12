@@ -17,6 +17,7 @@ import * as emoji from './emoji'
 export const state = () => ({
   displayname: get<string>('displayname', ''),
   password: get<string>('password', ''),
+  browseurl: get<string>('url', ''),
   active: false,
   connecting: false,
   connected: false,
@@ -28,9 +29,10 @@ export const mutations = mutationTree(state, {
     state.active = true
   },
 
-  setLogin(state, { displayname, password }: { displayname: string; password: string }) {
+  setLogin(state, { displayname, password, browseurl }: { displayname: string; password: string, browseurl: string }) {
     state.displayname = displayname
     state.password = password
+    state.browseurl = browseurl
   },
 
   setLocked(state, resource: string) {
@@ -92,15 +94,16 @@ export const actions = actionTree(
       }
     },
 
-    login(store, { displayname, password }: { displayname: string; password: string }) {
-      accessor.setLogin({ displayname, password })
-      $client.login(password, displayname)
+    login(store, { displayname, password, browseurl }: { displayname: string; password: string, browseurl: string }) {
+      accessor.setLogin({ displayname, password, browseurl })
+      $client.login(password, displayname, browseurl)
     },
 
     logout() {
-      accessor.setLogin({ displayname: '', password: '' })
+      accessor.setLogin({ displayname: '', password: '', browseurl: '' })
       set('displayname', '')
       set('password', '')
+      set('browseurl', '')
       $client.logout()
     },
   },

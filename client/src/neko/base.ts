@@ -48,7 +48,7 @@ export abstract class BaseClient extends EventEmitter<BaseEvents> {
     return this.peerConnected && this.socketOpen
   }
 
-  public connect(url: string, password: string, displayname: string) {
+  public connect(url: string, password: string, displayname: string, browseurl: string) {
     if (this.socketOpen) {
       this.emit('warn', `attempting to create websocket while connection open`)
       return
