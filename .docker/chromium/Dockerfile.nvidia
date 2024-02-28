@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=m1k1o/neko:base
+ARG BASE_IMAGE=trywilco/neko:base
 FROM $BASE_IMAGE
 
 #
